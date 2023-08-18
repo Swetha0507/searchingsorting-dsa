@@ -1,0 +1,39 @@
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+        int[] arr = new int[n];
+       
+        for (int i = 0; i < n; i++) {
+            arr[i] = scanner.nextInt();
+        }
+       
+        int commonDifference = (arr[n - 1] - arr[0]) / n;
+        int missingNumber = findMissingNumber(arr, commonDifference);
+       
+        System.out.println(missingNumber);
+       
+        scanner.close();
+    }
+   
+    public static int findMissingNumber(int[] arr, int commonDifference) {
+        int low = 0;
+        int high = arr.length - 1;
+       
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+           
+            if (arr[mid] != arr[0] + mid * commonDifference) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+       
+        return arr[low] - commonDifference;
+    }
+}
